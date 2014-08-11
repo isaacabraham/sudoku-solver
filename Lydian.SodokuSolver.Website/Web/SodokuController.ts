@@ -27,10 +27,24 @@ sodokuApp.controller("sodokuCtrl", ['$scope', '$http', ($scope, $http:ng.IHttpSe
                                 var x = horizontalBand * 3 + cell + 1;
                                 return new Cell(x, y, "");
                             }))));
-
+    
     $scope.grid = grid;
-    $scope.solve = x =>
-        $http.get("/api/sodoku")
-             .success(x => alert(x));
+    $scope.solve = y => {
+        $scope.name = "serializing...";
+        var json = JSON.stringify(grid)
+        $scope.name = "posting...";
+        $http.post("/api/sodoku", json)
+            .error(x => $scope.name = "ERROR!")
+            .success((results: Cell[]) => {
+                results.forEach(cell => {
+                    var verticalBand = Math.floor((cell.Y - 1) / 3) + 1
+                    var horizontalBand = Math.floor((cell.X - 1) / 3) + 1
+                    var line = ((cell.Y - 1) % 3) + 1
+                    var cellPos = ((cell.X - 1) % 3) + 1
+                    grid[verticalBand - 1][horizontalBand - 1][line - 1][cellPos - 1].Value = cell.Value;
+                    $scope.name = cell.X;
+                });
+            });
+    }
     $scope.name = "isaac";
 }]);

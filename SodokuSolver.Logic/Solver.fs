@@ -1,4 +1,4 @@
-﻿module SodokuSolver.Solver
+﻿module Lydian.SodokuSolver.Solver
 
 open System
 
@@ -9,7 +9,7 @@ module private Seq =
             if predicate item then Some item
             else None)
 
-type private Cell = 
+type Cell = 
     { Index : int
       X : int
       Y : int
@@ -17,21 +17,27 @@ type private Cell =
       IsLastCell : bool
       mutable Value : int option }
 
+let private toCell index (x, y, value)=
+    let getBlock x y = (((x - 1) / 3) + 1) + (((y - 1) / 3) * 3)
+    {  Index = index
+       X = x
+       Y = y
+       Value = value
+       Block = getBlock x y
+       IsLastCell = (x = 9 && y = 9) }
+
+let convertToCell(index, x, y, value:Nullable<_>) =
+    let value = if value.HasValue then Some value.Value else None
+    toCell index (x, y, value)
+
 // converts a simple array of numbers into a sudoku grid
 let private toGrid sourceData = 
-    let getBlock x y = (((x - 1) / 3) + 1) + (((y - 1) / 3) * 3)
     sourceData
     |> Seq.toOptional ((<>) 0)
     |> Seq.mapi (fun index cell -> 
            let div, rem = Math.DivRem(index, 9)
            rem + 1, div + 1, cell)
-    |> Seq.mapi (fun index (x, y, value) -> 
-           { Index = index
-             X = x
-             Y = y
-             Value = value
-             Block = getBlock x y
-             IsLastCell = (x = 9 && y = 9) })
+    |> Seq.mapi toCell
     |> Seq.toArray
 
 /// tests whether a suggestion for a cell is valid
@@ -104,3 +110,5 @@ let SolvePuzzle(input : string) =
         |> solve
         |> toData
     | len -> failwith (sprintf "expected 81 items, but got %d" len)
+
+let SolvePuzzleFromCells cells = cells |> solve

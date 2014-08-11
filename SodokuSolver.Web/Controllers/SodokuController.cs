@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace SodokuSolver.Web.Controllers
 {
@@ -8,9 +6,10 @@ namespace SodokuSolver.Web.Controllers
     {
         public string[] Get(string input)
         {
-            return Solver.SolvePuzzle(input)
-                         .Select(JsonConvert.SerializeObject)
-                         .ToArray();
+            //return Solver.SolvePuzzle(input)
+            //             .Select(JsonConvert.SerializeObject)
+            //             .ToArray();
+            return null;
         }
     }
 }

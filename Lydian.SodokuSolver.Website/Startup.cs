@@ -1,7 +1,10 @@
 ﻿using Lydian.SodokuSolver.Website;
+using Microsoft.FSharp.Core;
 using Microsoft.Owin;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -24,12 +27,35 @@ namespace Lydian.SodokuSolver.Website
             app.UseWebApi(config);
         }
     }
-
     public class SodokuController : ApiController
     {
-        public string Get()
+        public class Cell
         {
-            return "Foo";
+            public int? Value { get; set; }
+            public int X { get; set; }
+            public int Y { get; set; }
+        }
+
+        public async Task<Cell[]> Post([FromBody] Cell[][][][] cells)
+        {
+            var cellsAll = cells.SelectMany(c =>
+                               c.SelectMany(d =>
+                               d.SelectMany(e =>
+                               e.Select(f => f))))
+                                .Select((cell, index) => Solver.convertToCell(index, cell.X, cell.Y, cell.Value))
+                                .ToArray();
+
+            var result =
+                Solver.SolvePuzzleFromCells(cellsAll)
+                      .Select(cell =>
+                      {
+                          var value = default(int?);
+                          if (FSharpOption<int>.get_IsSome(cell.Value))
+                              value = cell.Value.Value;
+                          return new Cell { Value = value, X = cell.X, Y = cell.Y };
+                      })
+                      .ToArray();
+            return result;
         }
     }
 }

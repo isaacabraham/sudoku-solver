@@ -32,9 +32,21 @@ sodokuApp.controller("sodokuCtrl", [
         });
 
         $scope.grid = grid;
-        $scope.solve = function (x) {
-            return $http.get("/api/sodoku").success(function (x) {
-                return alert(x);
+        $scope.solve = function (y) {
+            $scope.name = "serializing...";
+            var json = JSON.stringify(grid);
+            $scope.name = "posting...";
+            $http.post("/api/sodoku", json).error(function (x) {
+                return $scope.name = "ERROR!";
+            }).success(function (results) {
+                results.forEach(function (cell) {
+                    var verticalBand = Math.floor((cell.Y - 1) / 3) + 1;
+                    var horizontalBand = Math.floor((cell.X - 1) / 3) + 1;
+                    var line = ((cell.Y - 1) % 3) + 1;
+                    var cellPos = ((cell.X - 1) % 3) + 1;
+                    grid[verticalBand - 1][horizontalBand - 1][line - 1][cellPos - 1].Value = cell.Value;
+                    $scope.name = cell.X;
+                });
             });
         };
         $scope.name = "isaac";
