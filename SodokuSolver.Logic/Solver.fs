@@ -111,4 +111,4 @@ let SolvePuzzle(input : string) =
         |> toData
     | len -> failwith (sprintf "expected 81 items, but got %d" len)
 
-let SolvePuzzleFromCells cells = cells |> solve
+let SolvePuzzleFromCells = solve
