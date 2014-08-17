@@ -20,15 +20,12 @@
     width: 234px;
 }
 
-
-
 .functionButton {
     margin-right: 28px;
     margin-bottom: 10px;
     height: 25px;
     width: 85px;
 }
-
 
 p.selectTitle {
     margin: 5px 5px 0 10px;
@@ -91,8 +88,12 @@ p.selectTitle {
     height: 90px;
 }
 
+button {
+    font-family:sans-serif;
+}
+
 .sudokuinput, .sudokuinputdark {
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: sans-serif;
     color: #000000;
     text-align: center;
     font-size: 30px;
@@ -110,8 +111,6 @@ p.selectTitle {
 .valueOptions {
     font-size: 12px !important;
 }
-
-
 
 .ctrButton {
     width: 135px;

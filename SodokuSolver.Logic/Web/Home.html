@@ -7,7 +7,10 @@
 <body bgcolor="#F9F9FF" ng-controller="sodokuCtrl">
     <link href="Styles.css" type="text/css" rel="stylesheet">
 
-    <p>Nothing here {{name}}</p>
+    <p style="margin-left:10px">
+        {{status}}
+        <progress ng-show="processing"></progress>
+    </p>
 
     <div style="width: 412px; height: 478px; float: left;margin-left: 10px">
         <table border="0" width="412" cellpadding="0" cellspacing="0">
@@ -16,14 +19,14 @@
                     <td valign="top">
                         <table class="sudokumaintable" border="0" cellpadding="0" cellspacing="0">
                             <tbody>
-                                <tr ng-repeat="verticalBand in grid.Data">
+                                <tr ng-repeat="verticalBand in grid.data">
                                     <td class="sudokumaintd" ng-repeat="horizontalBand in verticalBand">
                                         <table class="sudokublock">
                                             <tbody>
                                                 <tr ng-repeat="line in horizontalBand">
                                                     <td ng-repeat="cell in line" class="sudokucell">
                                                         <div class="pen" onclick=""></div>
-                                                        <input class="sudokuinput entryCell" type="text" ng-model="cell.Value" />
+                                                        <input class="sudokuinput entryCell" type="text" ng-model="cell.Value" numbers-only="numbers-only">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -37,8 +40,11 @@
             </tbody>
         </table>
     </div>
-
-    <button ng-click="solve()">Solve!</button>
-    <button ng-click="clear()">Clear!</button>
+    <p style="margin-left:10px">
+        <button ng-click="solve()">Solve!</button>
+    </p>
+    <p style="margin-left:10px">
+        <button ng-click="clear()">Clear!</button>
+    </p>
 </body>
 </html>

@@ -1,31 +1,50 @@
-﻿namespace SodokuSolver.Website.Api
+﻿namespace SodokuSolver.Api
 
-open Lydian.SodokuSolver.Solver
+open SodokuSolver.Logic.Solver
 open System.Web.Http
 open System
-open Newtonsoft.Json
+open Nessos.Streams.Core
 
-type ResultCell =
-    { Value : Nullable<int>
-      X : int
-      Y : int }
+type CellRequest = 
+    { X : int
+      Y : int
+      mutable Value : string }
+
+type SolveResponse =
+    { Grid : CellRequest[]
+      Result : bool } 
 
 type SolveRequest =
-    { Data : ResultCell[][][][] }
+    { Data : CellRequest[][][][] }
 
 type SodokuController() =
     inherit ApiController()
-    member __.Post(request:SolveRequest) =
-        let cells = request.Data
-                    |> Seq.collect(fun c -> c |> Seq.collect(fun d -> d |> Seq.collect(fun e -> e |> Seq.map id)))
-                    |> Seq.mapi(fun i (cell:ResultCell) -> convertToCell(i, cell.X, cell.Y, cell.Value))
-                    |> Seq.toArray
 
-        let result = SolvePuzzleFromCells cells
-                     |> Seq.map(fun cell ->
-                        let value = match cell.Value with
-                                    | Some value -> Nullable(value)
-                                    | None -> Nullable()
-                        { ResultCell.Value = value; X = cell.X; Y = cell.Y })
-                     |> Seq.toArray
-        result
+    let toCell request =
+        { Cell.X = request.X
+          Y = request.Y
+          Value = match request.Value |> Int32.TryParse with
+                  | true, value -> Some value
+                  | false, _ -> None }
+
+    let toRequest (cell:Cell) =
+        { X = cell.X
+          Y = cell.Y
+          Value = match cell.Value with
+                  | Some value -> value.ToString()
+                  | None -> String.Empty }
+
+    member __.Post(request:SolveRequest) =
+        request.Data
+        |> ParStream.ofSeq
+        |> ParStream.collect(fun c -> c |> Stream.ofArray |> Stream.collect(fun d -> d |> Stream.ofArray |> Stream.collect(fun e -> e |> Stream.ofArray |> Stream.map id)))
+        |> ParStream.map toCell
+        |> ParStream.toArray
+        |> Solve
+        |> fun (grid, succeeded) ->
+            { Grid = grid
+                      |> Option.map (ParStream.ofSeq
+                                     >> ParStream.map toRequest
+                                     >> ParStream.toArray)
+                      |> function | Some solution -> solution | None -> Array.empty
+              Result = succeeded }
