@@ -3,7 +3,7 @@
 type CellRequest = 
     { X : int
       Y : int
-      mutable Value : string }
+      Value : string }
 
 type SolutionRequest =
     { Data : CellRequest[][][][] }

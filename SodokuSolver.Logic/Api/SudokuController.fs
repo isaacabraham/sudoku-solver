@@ -11,17 +11,15 @@ type SudokuController() =
     member __.Post(request : SolutionRequest) = 
         async {
             return request.Data
-                   |> ParStream.ofSeq
-                   |> ParStream.collect (Seq.collect (Seq.collect id) >> Stream.ofSeq)
-                   |> ParStream.map toCell
-                   |> ParStream.toArray
+                   |> Stream.ofArray
+                   |> Stream.collect (Seq.collect (Seq.collect id) >> Stream.ofSeq)
+                   |> Stream.map toCell
+                   |> Stream.toArray
                    |> Solve
                    |> fun (grid, succeeded) -> 
                        { Grid = 
                              grid
-                             |> Option.map (ParStream.ofSeq
-                                            >> ParStream.map toRequest
-                                            >> ParStream.toArray)
+                             |> Option.map (Stream.ofSeq >> Stream.map toRequest >> Stream.toArray)
                              |> function 
                              | Some solution -> solution
                              | None -> Array.empty

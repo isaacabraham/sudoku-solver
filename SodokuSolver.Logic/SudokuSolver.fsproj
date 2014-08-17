@@ -125,7 +125,7 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
-    <Compile Include="api\Solver.fs" />
+    <Compile Include="api\Sudoku.fs" />
     <Compile Include="api\Contracts.fs" />
     <Compile Include="api\DomainModel.fs" />
     <Compile Include="api\SudokuController.fs" />

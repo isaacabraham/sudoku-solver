@@ -19,10 +19,10 @@ let validateSuggestion targetCell grid suggestion =
             (getBlock other = getBlock destination)
 
     grid
-    |> ParStream.ofSeq
-    |> ParStream.filter (isConnectedTo targetCell)
-    |> ParStream.map (fun cell -> cell.Value)
-    |> ParStream.toArray
+    |> Stream.ofSeq
+    |> Stream.filter (isConnectedTo targetCell)
+    |> Stream.map (fun cell -> cell.Value)
+    |> Stream.toArray
     |> Seq.choose id
     |> Seq.forall ((<>) suggestion)
 
@@ -36,10 +36,8 @@ let rec private solveRec (cell, index) (grid : Cell array) =
     | Some _ -> checkNextCell()
     | None -> 
         seq { 1..9 }
-        |> ParStream.ofSeq
-        |> ParStream.filter (validateSuggestion cell grid)
-        |> ParStream.toArray
-        |> Stream.ofArray
+        |> Stream.ofSeq
+        |> Stream.filter (validateSuggestion cell grid)
         |> Stream.fold (fun passed suggestion -> 
                if passed then true
                else 
