@@ -1,7 +1,7 @@
 ﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
-var sodokuApp = angular.module('sodokuApp', []);
+var sudokuApp = angular.module('sudokuApp', []);
 
-sodokuApp.directive('numbersOnly', () => {
+sudokuApp.directive('numbersOnly', () => {
     return {
         require: 'ngModel',
         link: (scope, element, attrs, modelCtrl) => {
@@ -42,7 +42,7 @@ interface Solution {
     Result : boolean
 }
 
-interface SodokuScope extends ng.IScope {
+interface SudokuScope extends ng.IScope {
     grid: Grid
     solve(): void
     status: string
@@ -50,7 +50,7 @@ interface SodokuScope extends ng.IScope {
     processing: boolean
 }
 
-sodokuApp.controller("sodokuCtrl", ['$scope', '$http', ($scope: SodokuScope, $http: ng.IHttpService) => {
+sudokuApp.controller("sudokuCtrl", ['$scope', '$http', ($scope: SudokuScope, $http: ng.IHttpService) => {
     var counter = [0, 1, 2];
     var grid = new Grid(counter.map(verticalBand =>
         counter.map(horizontalBand =>
@@ -64,7 +64,7 @@ sodokuApp.controller("sodokuCtrl", ['$scope', '$http', ($scope: SodokuScope, $ht
     $scope.solve = () => {
         $scope.processing = true;
         $scope.status = "Solving...";
-        $http.post("/api/sodoku", JSON.stringify(grid))
+        $http.post("/api/sudoku", JSON.stringify(grid))
             .error(x => {
                 $scope.processing = false;
                 $scope.status = "Error!";

@@ -1,7 +1,7 @@
 ﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
-var sodokuApp = angular.module('sodokuApp', []);
+var sudokuApp = angular.module('sudokuApp', []);
 
-sodokuApp.directive('numbersOnly', function () {
+sudokuApp.directive('numbersOnly', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
@@ -36,7 +36,7 @@ var Grid = (function () {
     return Grid;
 })();
 
-sodokuApp.controller("sodokuCtrl", [
+sudokuApp.controller("sudokuCtrl", [
     '$scope', '$http', function ($scope, $http) {
         var counter = [0, 1, 2];
         var grid = new Grid(counter.map(function (verticalBand) {
@@ -54,7 +54,7 @@ sodokuApp.controller("sodokuCtrl", [
         $scope.solve = function () {
             $scope.processing = true;
             $scope.status = "Solving...";
-            $http.post("/api/sodoku", JSON.stringify(grid)).error(function (x) {
+            $http.post("/api/sudoku", JSON.stringify(grid)).error(function (x) {
                 $scope.processing = false;
                 $scope.status = "Error!";
             }).success(function (solution) {
