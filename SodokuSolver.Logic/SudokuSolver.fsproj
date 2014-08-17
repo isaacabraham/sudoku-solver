@@ -89,7 +89,7 @@
       </FlavorProperties>
       <FlavorProperties Guid="{349c5851-65df-11da-9384-00065b846f21}" User="">
         <WebProjectProperties>
-          <StartPageUrl>Web/Home.html</StartPageUrl>
+          <StartPageUrl>Web/Index.html</StartPageUrl>
           <StartAction>SpecificPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>
@@ -122,7 +122,7 @@
     <TypeScriptCompile Include="Web\SudokuController.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </TypeScriptCompile>
-    <Content Include="Web\Home.html">
+    <Content Include="Web\Index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Styles.css">
