@@ -1,9 +1,8 @@
-﻿namespace SodokuSolver.Logic
+﻿namespace SudokuSolver.Logic
 
 open System.Web.Http
 open Newtonsoft.Json.Serialization
 open global.Owin
-open Microsoft.Owin
 
 type Config = {
     id : RouteParameter

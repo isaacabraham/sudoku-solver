@@ -1,4 +1,4 @@
-﻿module SodokuSolver.Logic.Solver
+﻿module SudokuSolver.Soduku
 
 open Nessos.Streams.Core
 
@@ -57,7 +57,7 @@ let private validate (grid:Cell array) =
                   |> Seq.forall (fun (cell, value) -> validateSuggestion cell grid value)
     if isValid then Some grid else None
 
-/// solves the grid
+/// solves the puzzle
 let Solve (grid:Cell array) = 
     grid
     |> validate

@@ -15,10 +15,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SodokuSolver.Logic</RootNamespace>
-    <AssemblyName>SodokuSolver.Logic</AssemblyName>
+    <AssemblyName>SudokuSolver</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>SodokuSolver.Logic</Name>
+    <Name>SudokuSolver</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseIISExpress>true</UseIISExpress>
@@ -37,7 +37,7 @@
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\SodokuSolver.Logic.XML</DocumentationFile>
+    <DocumentationFile>bin\SudokuSolver.Logic.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -110,8 +110,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
-    <Compile Include="Solver.fs" />
-    <None Include="Script.fsx" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-scenario.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
@@ -136,9 +134,13 @@
     <Content Include="Web\SodokuController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Api\Sodoku.fs" />
-    <None Include="packages.config" />
+    <Compile Include="Api\Solver.fs" />
+    <Compile Include="Api\Contracts.fs" />
+    <Compile Include="Api\DomainModel.fs" />
+    <Compile Include="Api\SudokuController.fs" />
+    <None Include="Script.fsx" />
     <Compile Include="Startup.fs" />
+    <None Include="packages.config" />
     <Content Include="Web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
