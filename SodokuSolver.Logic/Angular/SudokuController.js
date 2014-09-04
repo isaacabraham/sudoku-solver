@@ -50,17 +50,22 @@ sudokuApp.controller("sudokuCtrl", [
                 });
             });
         }));
+        $scope.displayStatus = false;
         $scope.grid = grid;
         $scope.solve = function () {
             $scope.processing = true;
+            $scope.displayStatus = true;
             $scope.status = "Solving...";
+            $scope.statusClass = "warning";
             $http.post("/api/sudoku", JSON.stringify(grid)).error(function (x) {
                 $scope.processing = false;
+                $scope.statusClass = "danger";
                 $scope.status = "Error!";
             }).success(function (solution) {
                 $scope.processing = false;
                 if (solution.Result) {
                     $scope.status = "Success!";
+                    $scope.statusClass = "success";
                     solution.Grid.forEach(function (cell) {
                         var verticalBand = Math.floor((cell.Y - 1) / 3) + 1;
                         var horizontalBand = Math.floor((cell.X - 1) / 3) + 1;
@@ -68,8 +73,10 @@ sudokuApp.controller("sudokuCtrl", [
                         var cellPos = ((cell.X - 1) % 3) + 1;
                         grid.data[verticalBand - 1][horizontalBand - 1][line - 1][cellPos - 1].Value = cell.Value;
                     });
-                } else
+                } else {
                     $scope.status = "Failed to solve this puzzle :(";
+                    $scope.statusClass = "danger";
+                }
             });
         };
 
@@ -83,7 +90,8 @@ sudokuApp.controller("sudokuCtrl", [
                     });
                 });
             });
-            $scope.status = "Enter puzzle.";
+            $scope.status = "";
+            $scope.displayStatus = false;
         };
 
         $scope.clear();

@@ -48,6 +48,8 @@ interface SudokuScope extends ng.IScope {
     status: string
     clear(): void
     processing: boolean
+    displayStatus: boolean
+    statusClass:string
 }
 
 sudokuApp.controller("sudokuCtrl", ['$scope', '$http', ($scope: SudokuScope, $http: ng.IHttpService) => {
@@ -60,20 +62,24 @@ sudokuApp.controller("sudokuCtrl", ['$scope', '$http', ($scope: SudokuScope, $ht
                     var x = horizontalBand * 3 + cell + 1;
                     return new Cell(x, y, '');
                 })))));
+    $scope.displayStatus = false;
     $scope.grid = grid;
     $scope.solve = () => {
         $scope.processing = true;
+        $scope.displayStatus = true;
         $scope.status = "Solving...";
+        $scope.statusClass = "warning";
         $http.post("/api/sudoku", JSON.stringify(grid))
             .error(x => {
                 $scope.processing = false;
+                $scope.statusClass = "danger";
                 $scope.status = "Error!";
             })
             .success((solution: Solution) => {
                 $scope.processing = false;
-                if (solution.Result)
-                {
+                if (solution.Result) {
                     $scope.status = "Success!";
+                    $scope.statusClass = "success";
                     solution.Grid.forEach(cell => {
                         var verticalBand = Math.floor((cell.Y - 1) / 3) + 1
                         var horizontalBand = Math.floor((cell.X - 1) / 3) + 1
@@ -82,8 +88,10 @@ sudokuApp.controller("sudokuCtrl", ['$scope', '$http', ($scope: SudokuScope, $ht
                         grid.data[verticalBand - 1][horizontalBand - 1][line - 1][cellPos - 1].Value = cell.Value;
                     });
                 }
-                else
+                else {
                     $scope.status = "Failed to solve this puzzle :(";
+                    $scope.statusClass = "danger";
+                }
             });
     }
 
@@ -93,7 +101,8 @@ sudokuApp.controller("sudokuCtrl", ['$scope', '$http', ($scope: SudokuScope, $ht
                 horizontalBand.forEach((line, e, f) =>
                     line.forEach((cell, g, h) =>
                         cell.Value = ""))))
-        $scope.status = "Enter puzzle.";
+        $scope.status = "";
+        $scope.displayStatus = false;
     };
 
     $scope.clear();
