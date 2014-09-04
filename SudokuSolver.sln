@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C5B9F8
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SudokuSolver", "SodokuSolver.Logic\SudokuSolver.fsproj", "{53D7F393-211E-41EE-AF0B-1226EBFF7757}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SudokuSolver", "src\SudokuSolver.fsproj", "{53D7F393-211E-41EE-AF0B-1226EBFF7757}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
