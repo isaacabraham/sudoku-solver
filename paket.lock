@@ -1,0 +1,33 @@
+REDIRECTS: ON
+FRAMEWORK: NET452
+NUGET
+  remote: https://www.nuget.org/api/v2
+  specs:
+    angularjs.TypeScript.DefinitelyTyped (6.1) - content: none
+      jquery.TypeScript.DefinitelyTyped
+    Deedle (1.2.4)
+    FSharp.Core (4.0.0.1)
+    jquery.TypeScript.DefinitelyTyped (3.0.5) - content: none
+    Microsoft.AspNet.WebApi.Client (5.2.3)
+      Newtonsoft.Json (>= 6.0.4)
+    Microsoft.AspNet.WebApi.Core (5.2.3)
+      Microsoft.AspNet.WebApi.Client (>= 5.2.3)
+    Microsoft.AspNet.WebApi.Owin (5.2.3)
+      Microsoft.AspNet.WebApi.Core (>= 5.2.3 < 5.3)
+      Microsoft.Owin (>= 2.0.2)
+      Owin (>= 1.0)
+    Microsoft.Owin (3.0.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.FileSystems (3.0.1)
+    Microsoft.Owin.Host.SystemWeb (3.0.1)
+      Microsoft.Owin (>= 3.0.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.StaticFiles (3.0.1)
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.FileSystems (>= 3.0.1)
+      Owin (>= 1.0)
+    Newtonsoft.Json (8.0.3)
+    NuGet.CommandLine (3.3)
+    Owin (1.0)
+    OwinHost (3.0.1)
+    Streams (0.4.1)

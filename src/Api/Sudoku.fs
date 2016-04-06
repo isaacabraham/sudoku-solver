@@ -1,6 +1,6 @@
 ﻿module SudokuSolver.Soduku
 
-open Nessos.Streams.Core
+open Nessos.Streams
 
 type Cell = 
     { X : int

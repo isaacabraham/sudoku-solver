@@ -1,6 +1,6 @@
 ﻿namespace SudokuSolver.Api
 
-open Nessos.Streams.Core
+open Nessos.Streams
 open SudokuSolver
 open SudokuSolver.DomainModel
 open SudokuSolver.Soduku

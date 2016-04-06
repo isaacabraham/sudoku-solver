@@ -1,0 +1,13 @@
+source https://www.nuget.org/api/v2/
+framework: net452
+redirects on
+
+nuget NuGet.CommandLine
+nuget angularjs.TypeScript.DefinitelyTyped content:none
+nuget Deedle
+nuget Microsoft.AspNet.WebApi.Owin
+nuget Microsoft.Owin.Host.SystemWeb
+nuget Microsoft.Owin.StaticFiles
+nuget OwinHost
+nuget Streams
+nuget FSharp.Core
